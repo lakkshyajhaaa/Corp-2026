@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  JUDGE
+  TEAM
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String
+  role         Role         @default(TEAM)
+  mfaEnabled   Boolean      @default(false)
+  mfaSecret    String?
+  teamMembers  TeamMember[]
+  auditLogs    AuditLog[]
+}
+
+model Team {
+  id              String             @id @default(uuid())
+  name            String
+  clusterId       String
+  cluster         Cluster            @relation(fields: [clusterId], references: [id])
+  members         TeamMember[]
+  pointLedger     PointLedger[]
+  financialLedger FinancialLedger[]
+  sourceRelations TeamRelationship[] @relation("SourceTeam")
+  targetRelations TeamRelationship[] @relation("TargetTeam")
+  submissions     Submission[]
+  wagers          Wager[]
+}
+
+model TeamMember {
+  id       String   @id @default(uuid())
+  userId   String
+  teamId   String
+  role     String
+  joinedAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  team     Team     @relation(fields: [teamId], references: [id])
+}
+
+model Cluster {
+  id    String @id @default(uuid())
+  name  String
+  teams Team[]
+}
+
+model TeamRelationship {
+  id            String    @id @default(uuid())
+  sourceTeamId  String
+  targetTeamId  String
+  type          String
+  status        String
+  initiatedById String
+  approvedById  String?
+  createdAt     DateTime  @default(now())
+  resolvedAt    DateTime?
+  sourceTeam    Team      @relation("SourceTeam", fields: [sourceTeamId], references: [id])
+  targetTeam    Team      @relation("TargetTeam", fields: [targetTeamId], references: [id])
+}
+
+model Round {
+  id          String       @id @default(uuid())
+  number      Int          @unique
+  name        String
+  status      String
+  opensAt     DateTime?
+  closesAt    DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  submissions Submission[]
+  wagers      Wager[]
+}
+
+model CompetitionState {
+  id           String @id @default(uuid())
+  currentState String
+}
+
+model RoundAccess {
+  id      String @id @default(uuid())
+  teamId  String
+  roundId String
+  status  String
+}
+
+model Submission {
+  id        String   @id @default(uuid())
+  teamId    String
+  roundId   String
+  content   String
+  timestamp DateTime @default(now())
+  team      Team     @relation(fields: [teamId], references: [id])
+  round     Round    @relation(fields: [roundId], references: [id])
+}
+
+model PointLedger {
+  id            String   @id @default(uuid())
+  teamId        String
+  delta         Int
+  balanceAfter  Int
+  reason        String
+  referenceType String
+  referenceId   String?
+  createdAt     DateTime @default(now())
+  team          Team     @relation(fields: [teamId], references: [id])
+}
+
+model FinancialLedger {
+  id            String   @id @default(uuid())
+  teamId        String
+  delta         Float
+  balanceAfter  Float
+  reason        String
+  referenceType String
+  referenceId   String?
+  createdAt     DateTime @default(now())
+  team          Team     @relation(fields: [teamId], references: [id])
+}
+
+model Wager {
+  id             String   @id @default(uuid())
+  teamId         String
+  roundId        String
+  amount         Int
+  status         String
+  idempotencyKey String   @unique
+  createdAt      DateTime @default(now())
+  team           Team     @relation(fields: [teamId], references: [id])
+  round          Round    @relation(fields: [roundId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  resource  String
+  payload   String?
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}

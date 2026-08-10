@@ -1,0 +1,293 @@
+.wrapper {
+  background-color: #0b111a; /* Deep Aegean blue from the image */
+  color: #e5e7eb;
+  min-height: 100vh;
+  font-family: var(--font-ui), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.brandTitle {
+  font-family: var(--font-display), serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: #fff;
+}
+
+.brandSubtitle {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: #9ca3af;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLinks a {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover, .navLinks .activeLink {
+  color: #fff;
+}
+
+.activeLink {
+  border-bottom: 1px solid #d4af37;
+  padding-bottom: 2px;
+}
+
+/* Layout Grid */
+.container {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.leftColumn {
+  flex: 1;
+  padding: 3rem 4rem;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.rightColumn {
+  width: 45%;
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* Celestial Box (Hero Image Area) */
+.celestialBox {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: radial-gradient(circle at top right, #1a2a40, #0b111a);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.coordinatesLeft {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 0.75rem;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
+
+.coordinatesRight {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.75rem;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
+
+.constellationSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.overlayGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, #0b111a 100%);
+  z-index: 2;
+}
+
+.heroRoman {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  font-family: var(--font-display), serif;
+  font-size: 6rem;
+  color: #d4af37;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  z-index: 10;
+  margin: 0;
+}
+
+/* Left Column Typography */
+.heroTitle {
+  font-family: var(--font-display), serif;
+  font-size: 2.25rem;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.heroDesc {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  max-width: 80%;
+  margin-bottom: 3rem;
+}
+
+/* Phase Grid */
+.phaseGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.phaseCard {
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  border-right: 1px solid rgba(212, 175, 55, 0.1);
+  padding: 1.5rem 2rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.phaseCard:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.phaseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.phaseLabel {
+  font-size: 0.6rem;
+  color: #d4af37;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.starIcon {
+  color: #d4af37;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.phaseNumber {
+  font-family: var(--font-display), serif;
+  font-size: 3.5rem;
+  color: #d4af37;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.phaseTitle {
+  font-size: 0.8rem;
+  color: #fff;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.phaseDate {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* Right Column */
+.starIconLarge {
+  color: #d4af37;
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.rightTop {
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 3rem;
+}
+
+.rightLabel {
+  font-size: 0.7rem;
+  color: #d4af37;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.rightTitle {
+  font-family: var(--font-display), serif;
+  font-size: 2.25rem;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.rightMiddle {
+  text-align: center;
+}
+
+.middleTitle {
+  font-family: var(--font-display), serif;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.middleDesc {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.imageGrid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.imageDark1 {
+  width: 200px;
+  height: 250px;
+  background: linear-gradient(135deg, #1a2a40, #000);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.imageDark2 {
+  width: 150px;
+  height: 250px;
+  background: linear-gradient(45deg, #0b111a, #2a3a50);
+  border: 1px solid rgba(255,255,255,0.05);
+}

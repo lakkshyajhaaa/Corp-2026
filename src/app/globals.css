@@ -1,0 +1,213 @@
+:root {
+  /* =========================================
+     COLOR SYSTEM: THE ODYSSEY (Atmospheric)
+     ========================================= */
+  
+  /* Primary (The Deep / The Night) */
+  --color-aegean: #071A24;
+  --color-midnight: #0B1020;
+  --color-charcoal: #111315;
+
+  /* Secondary (The Material / The Land) */
+  --color-marble: #E8E1D2;
+  --color-stone: #C9C2B4;
+  --color-slate: #53616A;
+
+  /* Accents (The Artifacts) */
+  --color-terracotta: #A54A32;
+  --color-bronze: #B08D57;
+  --color-olive: #596044;
+  --color-gold: #C6A15B; /* Flat, non-blooming luminous tone */
+
+  /* Structural Colors */
+  --color-bg-base: var(--color-marble);
+  --color-text-base: var(--color-charcoal);
+  --color-border-hairline: rgba(83, 97, 106, 0.2);
+  --color-border-dark: rgba(232, 225, 210, 0.1);
+  
+  /* =========================================
+     TYPOGRAPHY & GEOMETRY
+     ========================================= */
+  --space-unit: 8px;
+  --radius-default: 0px;
+  --radius-functional: 2px;
+}
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-ui), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+     TEXTURE & ATMOSPHERE
+     ========================================= */
+
+/* The base container that holds the atmospheric gradient and texture */
+.atmospheric-container {
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+  transition: background 1s ease, color 1s ease;
+}
+
+/* Subtle SVG Noise for Materiality */
+.atmospheric-container::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04; /* Extremely subtle */
+  mix-blend-mode: multiply;
+}
+
+/* Themes (Atmospheric Transitions) */
+.theme-daylight {
+  background-color: var(--color-marble);
+  color: var(--color-charcoal);
+}
+
+.theme-dusk {
+  /* A deep, warm stone transitioning slightly into slate */
+  background: radial-gradient(circle at top right, var(--color-stone) 0%, #B8B0A0 100%);
+  color: var(--color-charcoal);
+}
+
+.theme-night {
+  /* Deep sea/sky falloff */
+  background: radial-gradient(circle at top center, var(--color-aegean) 0%, var(--color-midnight) 60%, var(--color-charcoal) 100%);
+  color: var(--color-marble);
+}
+.theme-night::before {
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}
+
+/* =========================================
+     TYPOGRAPHY HIERARCHY
+     ========================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.serif-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.serif-italic {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.roman-numeral {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-bronze);
+}
+
+.meta-text {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+}
+.theme-daylight .meta-text, .theme-dusk .meta-text { color: var(--color-slate); }
+.theme-night .meta-text { color: var(--color-stone); }
+
+/* Core Element Resets */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--radius-default);
+}
+
+/* =========================================
+     COMPONENTS (Rich but Non-Vibe-Coded)
+     ========================================= */
+
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 4);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Daylight/Dusk Button */
+.theme-daylight .btn-editorial, .theme-dusk .btn-editorial {
+  border: 1px solid var(--color-charcoal);
+  color: var(--color-charcoal);
+  background-color: transparent;
+}
+.theme-daylight .btn-editorial:hover, .theme-dusk .btn-editorial:hover {
+  background-color: var(--color-charcoal);
+  color: var(--color-marble);
+}
+
+/* Night Button */
+.theme-night .btn-editorial {
+  border: 1px solid var(--color-marble);
+  color: var(--color-marble);
+  background-color: transparent;
+}
+.theme-night .btn-editorial:hover {
+  background-color: var(--color-marble);
+  color: var(--color-midnight);
+}
+
+/* Interactive Elements (Inputs) */
+.editorial-input {
+  width: 100%;
+  padding: calc(var(--space-unit) * 2) 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-hairline);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.5rem;
+  transition: border-color 0.3s ease;
+}
+.theme-night .editorial-input {
+  color: var(--color-marble);
+  border-bottom-color: var(--color-border-dark);
+}
+.editorial-input:focus {
+  outline: none;
+}
+.theme-daylight .editorial-input:focus { border-bottom-color: var(--color-charcoal); }
+.theme-night .editorial-input:focus { border-bottom-color: var(--color-marble); }

@@ -1,0 +1,163 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-unit) * 6);
+  max-width: 900px;
+}
+
+.header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: calc(var(--space-unit) * 3);
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: calc(var(--space-unit) * 1);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.stageCard {
+  display: flex;
+  gap: calc(var(--space-unit) * 4);
+}
+
+.stageVisual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stageNumber {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-accent-gold);
+  color: var(--color-accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.connector {
+  flex: 1;
+  width: 1px;
+  background-color: var(--color-border);
+  min-height: 80px;
+}
+
+.locked .stageNumber {
+  border-color: var(--color-border);
+  color: var(--color-steel-light);
+  background-color: var(--color-bg-primary);
+}
+
+.stageContent {
+  flex: 1;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: calc(var(--space-unit) * 4);
+  margin-bottom: calc(var(--space-unit) * 4);
+}
+
+.locked .stageContent {
+  opacity: 0.7;
+  border-style: dashed;
+}
+
+.stageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--space-unit) * 2);
+}
+
+.stageHeader h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.locked .stageHeader h2 {
+  color: var(--color-steel-light);
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.statusBadge[data-status="LOCKED"] {
+  background-color: rgba(253, 251, 247, 0.05);
+  color: var(--color-steel-light);
+  border: 1px solid var(--color-border);
+}
+
+.statusBadge[data-status="OPEN"] {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.statusBadge[data-status="CLOSED"] {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.lockedText {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.unlockedContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--space-unit) * 3);
+}
+
+.unlockedContent p {
+  color: var(--color-text-secondary);
+}
+
+.enterBtn {
+  background-color: transparent;
+  color: var(--color-accent-gold);
+  border: 1px solid var(--color-accent-gold);
+  padding: calc(var(--space-unit) * 1) calc(var(--space-unit) * 3);
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.2s ease;
+}
+
+.enterBtn:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+.emptyState {
+  padding: calc(var(--space-unit) * 6);
+  text-align: center;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}

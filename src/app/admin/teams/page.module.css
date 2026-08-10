@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-unit) * 6);
+}
+
+.header {
+  border-bottom: calc(var(--border-weight) * 2) solid var(--color-border);
+  padding-bottom: calc(var(--space-unit) * 3);
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-text-primary);
+  margin-bottom: calc(var(--space-unit) * 1);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-weight: bold;
+}
+
+.tableContainer {
+  background-color: var(--color-bg-primary);
+  border: var(--border-weight) solid var(--color-border);
+  overflow-x: auto;
+  box-shadow: var(--shadow-hard);
+}
+
+.teamsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.teamsTable th {
+  text-align: left;
+  padding: calc(var(--space-unit) * 3);
+  color: var(--color-bg-primary);
+  background-color: var(--color-text-primary);
+  font-size: 0.85rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: var(--border-weight) solid var(--color-border);
+}
+
+.teamsTable td {
+  padding: calc(var(--space-unit) * 3);
+  color: var(--color-text-primary);
+  border-bottom: var(--border-weight) solid var(--color-border);
+  vertical-align: middle;
+}
+
+.teamName {
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.teamId {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  font-family: monospace;
+}
+
+.pointsCell {
+  font-family: var(--font-ui);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--color-accent-gold);
+}
+
+.adjustmentForm {
+  display: flex;
+  gap: calc(var(--space-unit) * 2);
+  align-items: center;
+}
+
+.numInput, .textInput {
+  background-color: var(--color-bg-secondary);
+  border: var(--border-weight) solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: calc(var(--space-unit) * 1);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: bold;
+  outline: none;
+}
+
+.numInput {
+  width: 80px;
+}
+
+.textInput {
+  width: 200px;
+}
+
+.numInput:focus, .textInput:focus {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-accent-gold);
+}
+
+.adjustBtn {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: var(--border-weight) solid var(--color-border);
+  padding: calc(var(--space-unit) * 1) calc(var(--space-unit) * 2);
+  font-weight: 900;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.15s ease;
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.adjustBtn:hover {
+  background-color: var(--color-accent-gold);
+  border-color: var(--color-border);
+  box-shadow: 2px 2px 0px 0px #000000;
+  transform: translate(2px, 2px);
+}

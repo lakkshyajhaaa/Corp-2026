@@ -1,0 +1,96 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-unit) * 6);
+  max-width: 1000px;
+}
+
+.header {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: calc(var(--space-unit) * 4);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: calc(var(--space-unit) * 1);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.roundsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: calc(var(--space-unit) * 4);
+}
+
+.roundCard {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-subtle);
+  padding: calc(var(--space-unit) * 4);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.roundCard:hover:not([data-locked="true"]) {
+  border-color: var(--color-text-secondary);
+  background-color: var(--color-bg-tertiary);
+}
+
+.roundCard[data-locked="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: var(--color-bg-primary);
+}
+
+.roundHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--space-unit) * 2);
+}
+
+.roundName {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.statusBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid transparent;
+}
+
+.statusBadge[data-status="LOCKED"] {
+  color: var(--color-text-muted);
+  border-color: var(--color-border-subtle);
+}
+
+.statusBadge[data-status="OPEN"] {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+}
+
+.statusBadge[data-status="CLOSED"] {
+  color: var(--color-text-secondary);
+  background-color: var(--color-border-subtle);
+}
+
+.roundDesc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
