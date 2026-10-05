@@ -40,6 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# macOS metadata
+.DS_Store
+._*
+**/._*
+.AppleDouble
+.LSOverride
+
 # Large 3D files ignored
 public/3d assets/source/extracted/th_version2.obj
 public/3d assets/source/th_version2.zip

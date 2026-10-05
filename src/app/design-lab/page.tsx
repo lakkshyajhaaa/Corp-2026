@@ -36,22 +36,22 @@ export default function DesignLabPage() {
             <svg className={styles.constellationSvg} viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="rgba(212, 175, 55, 1)" />
-                  <stop offset="100%" stopColor="rgba(212, 175, 55, 0)" />
+                  <stop offset="0%" stopColor="rgba(37, 99, 235, 1)" />
+                  <stop offset="100%" stopColor="rgba(37, 99, 235, 0)" />
                 </radialGradient>
               </defs>
               {/* Orbital Lines */}
-              <circle cx="200" cy="400" r="350" fill="none" stroke="rgba(212, 175, 55, 0.2)" strokeWidth="1" />
-              <circle cx="600" cy="-50" r="400" fill="none" stroke="rgba(212, 175, 55, 0.2)" strokeWidth="1" />
-              <path d="M 0,200 Q 400,0 800,300" fill="none" stroke="rgba(212, 175, 55, 0.3)" strokeWidth="1" />
-              <path d="M 100,400 Q 500,100 800,50" fill="none" stroke="rgba(212, 175, 55, 0.2)" strokeWidth="1" strokeDasharray="4 4" />
+              <circle cx="200" cy="400" r="350" fill="none" stroke="rgba(37, 99, 235, 0.2)" strokeWidth="1" />
+              <circle cx="600" cy="-50" r="400" fill="none" stroke="rgba(37, 99, 235, 0.2)" strokeWidth="1" />
+              <path d="M 0,200 Q 400,0 800,300" fill="none" stroke="rgba(37, 99, 235, 0.3)" strokeWidth="1" />
+              <path d="M 100,400 Q 500,100 800,50" fill="none" stroke="rgba(37, 99, 235, 0.2)" strokeWidth="1" strokeDasharray="4 4" />
               
               {/* Stars & Nodes */}
-              <circle cx="150" cy="120" r="2" fill="#fff" />
+              <circle cx="150" cy="120" r="2" fill="#2563EB" />
               <circle cx="250" cy="80" r="3" fill="url(#starGlow)" />
-              <circle cx="350" cy="180" r="1.5" fill="#fff" />
+              <circle cx="350" cy="180" r="1.5" fill="#2563EB" />
               <circle cx="450" cy="250" r="4" fill="url(#starGlow)" />
-              <circle cx="650" cy="150" r="2" fill="#fff" />
+              <circle cx="650" cy="150" r="2" fill="#2563EB" />
               
               {/* Constellation Lines */}
               <line x1="150" y1="120" x2="250" y2="80" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />

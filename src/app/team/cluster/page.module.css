@@ -37,7 +37,7 @@
 
 .isSelf {
   border-color: var(--color-accent-gold);
-  background-color: rgba(212, 175, 55, 0.03);
+  background-color: rgba(37, 99, 235, 0.03);
 }
 
 .teamHeader {
@@ -100,10 +100,10 @@
   padding: calc(var(--space-unit) * 2);
   background: repeating-linear-gradient(
     45deg,
-    rgba(253, 251, 247, 0.02),
-    rgba(253, 251, 247, 0.02) 10px,
-    rgba(253, 251, 247, 0.05) 10px,
-    rgba(253, 251, 247, 0.05) 20px
+    rgba(37, 99, 235, 0.02),
+    rgba(37, 99, 235, 0.02) 10px,
+    rgba(37, 99, 235, 0.05) 10px,
+    rgba(37, 99, 235, 0.05) 20px
   );
   border-radius: var(--radius-sm);
   text-align: center;

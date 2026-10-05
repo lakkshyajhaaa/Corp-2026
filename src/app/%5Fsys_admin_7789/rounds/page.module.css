@@ -99,7 +99,7 @@
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   border: var(--border-weight) solid var(--color-border);
-  box-shadow: 4px 4px 0px 0px #000000;
+  box-shadow: 4px 4px 0px 0px #0A2A6B;
   transition: all 0.15s ease;
 }
 
@@ -113,7 +113,7 @@
 .actionBtn:not(:disabled):hover {
   background-color: var(--color-text-primary);
   color: var(--color-bg-primary);
-  box-shadow: 2px 2px 0px 0px #000000;
+  box-shadow: 2px 2px 0px 0px #0A2A6B;
   transform: translate(2px, 2px);
 }
 

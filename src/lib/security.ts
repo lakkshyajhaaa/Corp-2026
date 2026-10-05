@@ -33,12 +33,19 @@ export async function requireTeamAuth() {
 }
 
 /**
- * Ensures the request is coming from an admin.
+ * Ensures the request is coming from an admin with the authorized email address.
  */
 export async function requireAdminAuth() {
   const user = await requireAuth();
+  
+  const allowedAdminEmail = process.env.ADMIN_EMAIL;
+  if (allowedAdminEmail && user.email.toLowerCase() !== allowedAdminEmail.toLowerCase()) {
+    throw new AuthorizationError('Access denied: Email address is not authorized for Admin access');
+  }
+
   if (user.role !== 'ADMIN' && user.role !== 'SUPER_ADMIN') {
     throw new AuthorizationError('Admin privileges required');
   }
   return user;
 }
+

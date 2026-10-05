@@ -1,77 +1,66 @@
 'use client';
 
-const CREAM = '#f5ebd9';
-const CRIMSON = '#d92525';
-const BLACK = '#0a0a0a';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import PageHero from '@/components/PageHero';
+import { Compass, Reveal } from '@/components/Odyssey';
+import styles from './gallery.module.css';
 
-const CodePillars = ({ flip = false }: { flip?: boolean }) => (
-  <div style={{ width: '200px', height: '100%', display: 'flex', gap: '20px', padding: '0 20px', transform: flip ? 'scaleX(-1)' : 'none' }}>
-    {[1, 2, 3].map(i => (
-      <div key={i} style={{ flex: 1, height: '100%', position: 'relative', display: 'flex', flexDirection: 'column' }}>
-        {/* Capital (Top) */}
-        <div style={{ height: '40px', width: '140%', marginLeft: '-20%', backgroundColor: BLACK, border: `4px solid ${CREAM}`, borderRadius: '5px 5px 0 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5px' }}>
-           <div style={{ width: '15px', height: '15px', borderRadius: '50%', border: `2px solid ${CREAM}` }}/>
-           <div style={{ width: '15px', height: '15px', borderRadius: '50%', border: `2px solid ${CREAM}` }}/>
-        </div>
-        {/* Shaft (Fluted) */}
-        <div style={{ flex: 1, width: '100%', backgroundColor: BLACK, borderLeft: `4px solid ${CREAM}`, borderRight: `4px solid ${CREAM}`,
-          backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 10px, ${CREAM} 10px, ${CREAM} 12px)`
-        }} />
-        {/* Base (Bottom) */}
-        <div style={{ height: '30px', width: '160%', marginLeft: '-30%', backgroundColor: BLACK, border: `4px solid ${CREAM}`, borderRadius: '10px 10px 0 0' }} />
-      </div>
-    ))}
-  </div>
-);
+const FILTERS = ['All', 'Innoventia', 'HR Conclave', 'CorpEureka'] as const;
+const GRADS = [
+  'linear-gradient(135deg,#60A5FA,#1D4ED8)',
+  'linear-gradient(135deg,#3B82F6,#0A2A6B)',
+  'linear-gradient(135deg,#93C5FD,#2563EB)',
+  'linear-gradient(135deg,#1D4ED8,#051433)',
+];
+const ITEMS = Array.from({ length: 12 }, (_, i) => ({
+  id: i + 1,
+  event: FILTERS[(i % 3) + 1],
+  title: `Moment ${i + 1}`,
+  height: [260, 340, 300, 380][i % 4],
+  grad: GRADS[i % 4],
+}));
 
 export default function GalleryPage() {
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>('All');
+  const [active, setActive] = useState<(typeof ITEMS)[number] | null>(null);
+  const shown = ITEMS.filter(i => filter === 'All' || i.event === filter);
+
   return (
-    <div style={{ position: 'relative', width: '100%', minHeight: '100vh', backgroundColor: '#000' }}>
+    <>
+      <PageHero eyebrow="The Archives" title="GALLERY" lead="A visual chronicle of past conquests, innovations and legendary moments." />
+      <section className="o-section">
+        <div className="o-container">
+          <div className={styles.filters}>
+            {FILTERS.map(f => (
+              <button key={f} onClick={() => setFilter(f)} className={`o-chip ${filter === f ? 'o-chip--active' : ''}`}>{f}</button>
+            ))}
+          </div>
 
-
-      <section style={{ minHeight: '100vh', padding: '15% 10%', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'rgba(10, 10, 10, 0.8)', position: 'relative', borderTop: `4px solid ${CRIMSON}` }}>
-        <div style={{ position: 'absolute', top: 0, left: '2%', bottom: 0, pointerEvents: 'none', opacity: 0.5 }}>
-           <CodePillars />
-        </div>
-        <div style={{ position: 'absolute', top: 0, right: '2%', bottom: 0, pointerEvents: 'none', opacity: 0.5 }}>
-           <CodePillars flip />
-        </div>
-
-        <h2 style={{ fontSize: 'clamp(4rem, 8vw, 6rem)', color: CREAM, fontFamily: 'serif', marginBottom: '1rem', textTransform: 'uppercase', textShadow: `6px 6px 0 ${CRIMSON}`, position: 'relative', zIndex: 2, textAlign: 'center' }}>
-          THE ARCHIVES
-        </h2>
-        <p style={{ color: CREAM, fontSize: '1.2rem', letterSpacing: '0.1em', marginBottom: '4rem', opacity: 0.8, textAlign: 'center', maxWidth: '600px', zIndex: 2 }}>
-          A visual chronicle of past conquests, innovations, and legendary moments at Prizmora.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem', width: '100%', maxWidth: '1400px', position: 'relative', zIndex: 2 }}>
-          {/* PLACEHOLDER GALLERY ITEMS */}
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
-            <div key={i} style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                backgroundColor: BLACK, 
-                border: `3px solid ${CREAM}`, 
-                boxShadow: `8px 8px 0 ${CRIMSON}`,
-                overflow: 'hidden',
-                aspectRatio: i % 3 === 0 ? '16/9' : '1/1' // Mix of square and landscape
-              }}>
-              <div style={{ 
-                  flex: 1, 
-                  backgroundColor: 'rgba(245, 235, 217, 0.05)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  backgroundImage: `radial-gradient(circle at center, rgba(245, 235, 217, 0.1) 0%, transparent 70%)`
-                }}>
-                <span style={{ color: CREAM, opacity: 0.3, fontFamily: 'serif', fontSize: '2rem', fontStyle: 'italic' }}>
-                  Image {i}
-                </span>
-              </div>
-            </div>
-          ))}
+          <div className={styles.grid}>
+            {shown.map((it, i) => (
+              <Reveal key={it.id} delay={(i % 3) * 0.08}>
+                <button className={styles.item} onClick={() => setActive(it)} aria-label={`Open ${it.title}`}>
+                  <div className={styles.art} style={{ height: it.height, background: it.grad }}><Compass size={90} color="#fff" /></div>
+                  <div className={styles.cap}><small>{it.event}</small><strong>{it.title}</strong></div>
+                </button>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
-    </div>
+
+      <AnimatePresence>
+        {active && (
+          <motion.div className={styles.lightbox} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActive(null)}>
+            <motion.div className={styles.lbInner} initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95 }} onClick={e => e.stopPropagation()}>
+              <button className={styles.close} onClick={() => setActive(null)} aria-label="Close">×</button>
+              <div className={styles.lbArt} style={{ background: active.grad }}><Compass size={160} color="#fff" spin /></div>
+              <div className={styles.lbBar}><strong>{active.title}</strong><span className="o-chip">{active.event}</span></div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

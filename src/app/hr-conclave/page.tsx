@@ -1,45 +1,24 @@
-import styles from './page.module.css';
+import EventPage from '@/components/EventPage';
 
 export default function HRConclavePage() {
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.headerMeta}>
-          <span className={styles.metaLabel}>DAY 02</span>
-          <span className={styles.metaLine}></span>
-          <span className={styles.metaLabel}>LEADERSHIP SYMPOSIUM</span>
-        </div>
-        <h1 className={styles.title}>HR CONCLAVE</h1>
-      </header>
-
-      <div className={styles.contentGrid}>
-        <div className={styles.editorialColumn}>
-          <p className={styles.leadText}>
-            Human capital optimization.
-          </p>
-          <p className={styles.bodyText}>
-            Navigate shifting paradigms in organizational architecture. 
-            This symposium examines the structural integrity of corporate leadership under sustained pressure.
-          </p>
-        </div>
-
-        <div className={styles.dataColumn}>
-          <div className={styles.dataNode}>
-            <span className={styles.nodeIcon}>●</span>
-            <div>
-              <h3 className={styles.nodeTitle}>PANEL A: STRUCTURAL INTEGRITY</h3>
-              <p className={styles.nodeDesc}>Maintaining corporate culture during rapid scaling.</p>
-            </div>
-          </div>
-          <div className={styles.dataNode}>
-            <span className={styles.nodeIcon}>●</span>
-            <div>
-              <h3 className={styles.nodeTitle}>KEYNOTE: THE TALENT MARKET</h3>
-              <p className={styles.nodeDesc}>Acquisition strategies in highly competitive sectors.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <EventPage
+      day="Day 02"
+      tone="Leadership Symposium"
+      title="HR CONCLAVE"
+      lead="Human capital, at the helm."
+      body={[
+        'Navigate shifting paradigms in organisational architecture. This symposium examines the structural integrity of corporate leadership under sustained pressure.',
+        'Take part in intricate case studies, panel discussions and advanced HR strategy simulations alongside leaders who steer organisations through changing tides.',
+      ]}
+      points={[
+        { title: 'Panel A: Structural Integrity', text: 'Maintaining corporate culture during rapid scaling.' },
+        { title: 'Keynote: The Talent Market', text: 'Acquisition strategies in highly competitive sectors.' },
+        { title: 'Case Studies', text: 'Hands-on HR strategy simulations.' },
+      ]}
+      cta={{ href: '/register', label: 'Register now' }}
+      prev={{ href: '/innoventia', label: 'Innoventia' }}
+      next={{ href: '/corpeureka', label: 'CorpEureka' }}
+    />
   );
 }

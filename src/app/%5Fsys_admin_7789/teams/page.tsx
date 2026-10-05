@@ -1,42 +1,49 @@
 import { requireAdminAuth } from '@/lib/security';
 import { prisma } from '@/lib/db';
-import { adjustTeamPoints } from '../actions';
+import { adjustTeamPoints, updateTeamStatus } from '../actions';
 import { getAuthoritativePoints } from '@/services/ledger.service';
 import styles from './page.module.css';
 
 export default async function AdminTeamsPage() {
   await requireAdminAuth();
 
-  const teams = await prisma.team.findMany({
-    include: {
-      cluster: true,
-    },
-    orderBy: {
-      name: 'asc'
-    }
-  });
+  let teamsWithPoints: Array<{ id: string; name: string; status: string; cluster: { name: string }; points: number }> = [];
 
-  // Fetch points for all teams
-  const teamsWithPoints = await Promise.all(
-    teams.map(async (team) => {
-      const points = await getAuthoritativePoints(team.id);
-      return { ...team, points };
-    })
-  );
+  try {
+    const teams = await prisma.team.findMany({
+      include: {
+        cluster: true,
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    });
+
+    teamsWithPoints = await Promise.all(
+      teams.map(async (team) => {
+        const points = await getAuthoritativePoints(team.id);
+        return { ...team, points };
+      })
+    );
+  } catch (error) {
+    console.warn('Database connection error in AdminTeamsPage:', error);
+  }
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Entity Ledgers</h1>
-        <p className={styles.subtitle}>Direct database access to all team records and points.</p>
+        <h1 className={styles.title}>Company & Entity Ledgers</h1>
+        <p className={styles.subtitle}>Direct database access to manage, approve, or reject companies and teams.</p>
       </header>
 
       <div className={styles.tableContainer}>
         <table className={styles.teamsTable}>
           <thead>
             <tr>
-              <th>Team Name</th>
+              <th>Company / Team Name</th>
               <th>Cluster</th>
+              <th>Status</th>
+              <th>Approval Actions</th>
               <th>Current Points</th>
               <th>Manual Adjustment</th>
             </tr>
@@ -49,6 +56,35 @@ export default async function AdminTeamsPage() {
                   <div className={styles.teamId}>{team.id}</div>
                 </td>
                 <td>{team.cluster.name}</td>
+                <td>
+                  <span className={`${styles.statusBadge} ${styles[team.status.toLowerCase()]}`}>
+                    {team.status}
+                  </span>
+                </td>
+                <td>
+                  <div className={styles.actionGroup}>
+                    {team.status !== 'APPROVED' && (
+                      <form action={async () => {
+                        'use server';
+                        await updateTeamStatus(team.id, 'APPROVED');
+                      }}>
+                        <button type="submit" className={`${styles.actionBtn} ${styles.approveBtn}`}>
+                          Approve
+                        </button>
+                      </form>
+                    )}
+                    {team.status !== 'REJECTED' && (
+                      <form action={async () => {
+                        'use server';
+                        await updateTeamStatus(team.id, 'REJECTED');
+                      }}>
+                        <button type="submit" className={`${styles.actionBtn} ${styles.rejectBtn}`}>
+                          Reject
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </td>
                 <td className={styles.pointsCell}>{team.points}</td>
                 <td>
                   <form className={styles.adjustmentForm} action={async (formData) => {

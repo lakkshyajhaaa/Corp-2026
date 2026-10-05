@@ -3,7 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -14,7 +15,7 @@ enum Role {
 }
 
 model User {
-  id           String       @id @default(uuid())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   email        String       @unique
   passwordHash String
   role         Role         @default(TEAM)
@@ -25,9 +26,10 @@ model User {
 }
 
 model Team {
-  id              String             @id @default(uuid())
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  clusterId       String
+  status          String             @default("PENDING") // APPROVED, REJECTED, PENDING
+  clusterId       String             @db.ObjectId
   cluster         Cluster            @relation(fields: [clusterId], references: [id])
   members         TeamMember[]
   pointLedger     PointLedger[]
@@ -39,9 +41,9 @@ model Team {
 }
 
 model TeamMember {
-  id       String   @id @default(uuid())
-  userId   String
-  teamId   String
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String   @db.ObjectId
+  teamId   String   @db.ObjectId
   role     String
   joinedAt DateTime @default(now())
   user     User     @relation(fields: [userId], references: [id])
@@ -49,15 +51,15 @@ model TeamMember {
 }
 
 model Cluster {
-  id    String @id @default(uuid())
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String
   teams Team[]
 }
 
 model TeamRelationship {
-  id            String    @id @default(uuid())
-  sourceTeamId  String
-  targetTeamId  String
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  sourceTeamId  String    @db.ObjectId
+  targetTeamId  String    @db.ObjectId
   type          String
   status        String
   initiatedById String
@@ -69,7 +71,7 @@ model TeamRelationship {
 }
 
 model Round {
-  id          String       @id @default(uuid())
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   number      Int          @unique
   name        String
   status      String
@@ -82,21 +84,21 @@ model Round {
 }
 
 model CompetitionState {
-  id           String @id @default(uuid())
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
   currentState String
 }
 
 model RoundAccess {
-  id      String @id @default(uuid())
-  teamId  String
-  roundId String
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  teamId  String @db.ObjectId
+  roundId String @db.ObjectId
   status  String
 }
 
 model Submission {
-  id        String   @id @default(uuid())
-  teamId    String
-  roundId   String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  teamId    String   @db.ObjectId
+  roundId   String   @db.ObjectId
   content   String
   timestamp DateTime @default(now())
   team      Team     @relation(fields: [teamId], references: [id])
@@ -104,8 +106,8 @@ model Submission {
 }
 
 model PointLedger {
-  id            String   @id @default(uuid())
-  teamId        String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  teamId        String   @db.ObjectId
   delta         Int
   balanceAfter  Int
   reason        String
@@ -116,8 +118,8 @@ model PointLedger {
 }
 
 model FinancialLedger {
-  id            String   @id @default(uuid())
-  teamId        String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  teamId        String   @db.ObjectId
   delta         Float
   balanceAfter  Float
   reason        String
@@ -128,9 +130,9 @@ model FinancialLedger {
 }
 
 model Wager {
-  id             String   @id @default(uuid())
-  teamId         String
-  roundId        String
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  teamId         String   @db.ObjectId
+  roundId        String   @db.ObjectId
   amount         Int
   status         String
   idempotencyKey String   @unique
@@ -140,11 +142,37 @@ model Wager {
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
-  userId    String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
   action    String
   resource  String
   payload   String?
   timestamp DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model EventRegistration {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  rollNo    String
+  phone     String
+  gender    String
+  events      String   // JSON array of event IDs
+  teamDetails String?  // JSON string storing team name and teammates
+  status      String   @default("APPROVED")
+  createdAt   DateTime @default(now())
+}
+
+model StartupRegistration {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  startupName String
+  founderName String
+  email       String   @unique
+  phone       String
+  description String
+  stage       String   // e.g., Idea, Prototype, MVP, Seed, etc.
+  pitchDeck   String?  // Optional link to pitch deck
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
 }

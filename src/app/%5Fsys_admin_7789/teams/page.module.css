@@ -112,12 +112,78 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.15s ease;
-  box-shadow: 4px 4px 0px 0px #000000;
+  box-shadow: 4px 4px 0px 0px #0A2A6B;
 }
 
 .adjustBtn:hover {
   background-color: var(--color-accent-gold);
   border-color: var(--color-border);
-  box-shadow: 2px 2px 0px 0px #000000;
+  box-shadow: 2px 2px 0px 0px #0A2A6B;
   transform: translate(2px, 2px);
 }
+
+.statusBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: var(--border-weight) solid var(--color-border);
+}
+
+.statusBadge.pending {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.statusBadge.approved {
+  background-color: #2ecc71;
+  color: #000;
+}
+
+.statusBadge.rejected {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.actionGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.actionBtn {
+  border: var(--border-weight) solid var(--color-border);
+  padding: 6px 12px;
+  font-weight: 900;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 3px 3px 0px 0px #0A2A6B;
+}
+
+.approveBtn {
+  background-color: #2ecc71;
+  color: #000;
+}
+
+.approveBtn:hover {
+  background-color: #27ae60;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px 0px #0A2A6B;
+}
+
+.rejectBtn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.rejectBtn:hover {
+  background-color: #c0392b;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px 0px #0A2A6B;
+}
+

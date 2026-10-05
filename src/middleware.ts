@@ -6,13 +6,13 @@ export default withAuth(
     const token = req.nextauth.token;
     const isAuth = !!token;
     const isAuthPage = req.nextUrl.pathname.startsWith('/login');
-    const isAdminPage = req.nextUrl.pathname.startsWith('/admin');
+    const isAdminPage = req.nextUrl.pathname.startsWith('/_sys_admin_7789');
     const isTeamPage = req.nextUrl.pathname.startsWith('/team');
 
     if (isAuthPage) {
       if (isAuth) {
         if (token.role === 'ADMIN' || token.role === 'SUPER_ADMIN') {
-          return NextResponse.redirect(new URL('/admin', req.url));
+          return NextResponse.redirect(new URL('/_sys_admin_7789', req.url));
         }
         return NextResponse.redirect(new URL('/team', req.url));
       }
@@ -28,8 +28,10 @@ export default withAuth(
     }
 
     if (isAdminPage) {
-      if (token?.role !== 'ADMIN' && token?.role !== 'SUPER_ADMIN') {
-        // Team member trying to access admin
+      const allowedAdminEmail = process.env.ADMIN_EMAIL;
+      const isEmailAuthorized = !allowedAdminEmail || token?.email?.toLowerCase() === allowedAdminEmail.toLowerCase();
+      if ((token?.role !== 'ADMIN' && token?.role !== 'SUPER_ADMIN') || !isEmailAuthorized) {
+        // Team member or unauthorized email trying to access admin
         return NextResponse.redirect(new URL('/team', req.url));
       }
     }
@@ -55,5 +57,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ['/team/:path*', '/admin/:path*', '/login'],
+  matcher: ['/team/:path*', '/_sys_admin_7789/:path*', '/login'],
 };

@@ -18,17 +18,17 @@ export default async function AdminLayout({
         </div>
 
         <nav className={styles.navigation}>
-          <Link href="/admin" className={styles.navLink}>
+          <Link href="/_sys_admin_7789" className={styles.navLink}>
             <span className={styles.icon}>◈</span>
             System Monitor
           </Link>
-          <Link href="/admin/rounds" className={styles.navLink}>
+          <Link href="/_sys_admin_7789/rounds" className={styles.navLink}>
             <span className={styles.icon}>◬</span>
             Round Controls
           </Link>
-          <Link href="/admin/teams" className={styles.navLink}>
+          <Link href="/_sys_admin_7789/teams" className={styles.navLink}>
             <span className={styles.icon}>⊚</span>
-            Entity Ledgers (Teams)
+            Company & Team Approvals
           </Link>
         </nav>
 
